@@ -1,0 +1,19 @@
+<com.vsoon.tvlayout.TvRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/half"
+        android:layout_width="960px"
+        android:layout_height="540px"
+        android:background="@android:color/holo_purple"
+        android:gravity="center"
+        android:text="Half"
+        android:textColor="@android:color/white"
+        android:textSize="96px"
+        android:textStyle="bold" />
+
+</com.vsoon.tvlayout.TvRelativeLayout>
