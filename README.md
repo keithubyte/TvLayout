@@ -63,12 +63,30 @@ public static void resize(View child, ViewGroup.LayoutParams params) {
 ```java
 public class LayoutRadio {
 
-    public static int STANDARD_WIDTH = 1920;
-    public static int STANDARD_HEIGHT = 1080;
+    public static int STANDARD_WIDTH = 1280;
+    public static int STANDARD_HEIGHT = 720;
 
-    public static float RADIO_WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels / STANDARD_WIDTH;
-    public static float RADIO_HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels / STANDARD_HEIGHT;
+    public static float RADIO_WIDTH;
+    public static float RADIO_HEIGHT;
 
+    static {
+        RADIO_WIDTH = calculateRadio(STANDARD_WIDTH, true);
+        RADIO_HEIGHT = calculateRadio(STANDARD_HEIGHT, false);
+    }
+
+    public static void resetStandard(int widht, int height) {
+        if (widht > 0 && height > 0) {
+            STANDARD_WIDTH = widht;
+            STANDARD_HEIGHT = height;
+            RADIO_WIDTH = calculateRadio(STANDARD_WIDTH, true);
+            RADIO_HEIGHT = calculateRadio(STANDARD_HEIGHT, false);
+        }
+    }
+
+    private static float calculateRadio(int value, boolean isWidth) {
+        DisplayMetrics dm = Resources.getSystem().getDisplayMetrics();
+        return isWidth ? dm.widthPixels / (float) value : dm.heightPixels / (float) value;
+    }
 }
 ```
 
