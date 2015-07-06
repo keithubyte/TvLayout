@@ -4,6 +4,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsoluteLayout;
 import android.widget.TextView;
 
 /**
@@ -38,6 +39,12 @@ public class LayoutResizer {
                 p.bottomMargin = (int) (p.bottomMargin * hRadio);
                 p.setMarginStart((int) (p.getMarginStart() * hRadio));
                 p.setMarginEnd((int) (p.getMarginEnd() * hRadio));
+            }
+
+            if (params instanceof AbsoluteLayout.LayoutParams) {
+                AbsoluteLayout.LayoutParams p = (AbsoluteLayout.LayoutParams) params;
+                p.x = (int) (p.x * wRadio);
+                p.y = (int) (p.y * hRadio);
             }
 
             // padding
