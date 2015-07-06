@@ -30,6 +30,6 @@ public class LayoutRadio {
 
     private static float calculateRadio(int value, boolean isWidth) {
         DisplayMetrics dm = Resources.getSystem().getDisplayMetrics();
-        return isWidth ? dm.widthPixels / value : dm.heightPixels / value;
+        return isWidth ? dm.widthPixels / (float) value : dm.heightPixels / (float) value;
     }
 }
