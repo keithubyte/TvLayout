@@ -36,6 +36,12 @@ public static void resize(View child, ViewGroup.LayoutParams params) {
             p.setMarginStart((int) (p.getMarginStart() * hRadio));
             p.setMarginEnd((int) (p.getMarginEnd() * hRadio));
         }
+        
+        if (params instanceof AbsoluteLayout.LayoutParams) {
+            AbsoluteLayout.LayoutParams p = (AbsoluteLayout.LayoutParams) params;
+            p.x = (int) (p.x * wRadio);
+            p.y = (int) (p.y * hRadio);
+        }
 
         // padding
         int paddingLeft = (int) (child.getPaddingLeft() * wRadio);
