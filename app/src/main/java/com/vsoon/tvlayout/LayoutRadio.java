@@ -13,18 +13,23 @@ public class LayoutRadio {
 
     public static float RADIO_WIDTH;
     public static float RADIO_HEIGHT;
+    public static float RADIO_AVERAGE;
 
     static {
+        initRadio();
+    }
+
+    private static void initRadio() {
         RADIO_WIDTH = calculateRadio(STANDARD_WIDTH, true);
         RADIO_HEIGHT = calculateRadio(STANDARD_HEIGHT, false);
+        RADIO_AVERAGE = (float) Math.sqrt(RADIO_WIDTH * RADIO_WIDTH + RADIO_HEIGHT * RADIO_HEIGHT);
     }
 
     public static void resetStandard(int widht, int height) {
         if (widht > 0 && height > 0) {
             STANDARD_WIDTH = widht;
             STANDARD_HEIGHT = height;
-            RADIO_WIDTH = calculateRadio(STANDARD_WIDTH, true);
-            RADIO_HEIGHT = calculateRadio(STANDARD_HEIGHT, false);
+            initRadio();
         }
     }
 

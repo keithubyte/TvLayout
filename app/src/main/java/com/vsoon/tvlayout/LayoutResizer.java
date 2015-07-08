@@ -1,5 +1,6 @@
 package com.vsoon.tvlayout;
 
+import android.content.res.Resources;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -14,6 +15,9 @@ public class LayoutResizer {
 
     private static final float wRadio = LayoutRadio.RADIO_WIDTH;
     private static final float hRadio = LayoutRadio.RADIO_HEIGHT;
+    private static final float aRadio = LayoutRadio.RADIO_AVERAGE;
+
+    private static final float sRadio = Resources.getSystem().getDisplayMetrics().scaledDensity;
 
     private LayoutResizer(){};
 
@@ -37,10 +41,11 @@ public class LayoutResizer {
                 p.topMargin = (int) (p.topMargin * hRadio);
                 p.rightMargin = (int) (p.rightMargin * wRadio);
                 p.bottomMargin = (int) (p.bottomMargin * hRadio);
-                p.setMarginStart((int) (p.getMarginStart() * hRadio));
-                p.setMarginEnd((int) (p.getMarginEnd() * hRadio));
+                p.setMarginStart((int) (p.getMarginStart() * aRadio));
+                p.setMarginEnd((int) (p.getMarginEnd() * aRadio));
             }
 
+            // x & y
             if (params instanceof AbsoluteLayout.LayoutParams) {
                 AbsoluteLayout.LayoutParams p = (AbsoluteLayout.LayoutParams) params;
                 p.x = (int) (p.x * wRadio);
@@ -57,8 +62,8 @@ public class LayoutResizer {
             // font size and others
             if (child instanceof TextView) {
                 TextView tv = (TextView) child;
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, tv.getTextSize() * hRadio);
-                tv.setCompoundDrawablePadding((int) (tv.getCompoundDrawablePadding() * hRadio));
+                tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, tv.getTextSize() * aRadio / sRadio);
+                tv.setCompoundDrawablePadding((int) (tv.getCompoundDrawablePadding() * aRadio));
                 tv.setMaxWidth((int) (tv.getMaxWidth() * wRadio));
                 tv.setMaxHeight((int) (tv.getMaxHeight() * hRadio));
                 tv.setMinWidth((int) (tv.getMinWidth() * wRadio));
