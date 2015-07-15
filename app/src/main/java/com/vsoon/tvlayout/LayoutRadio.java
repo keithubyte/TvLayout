@@ -22,7 +22,7 @@ public class LayoutRadio {
     private static void initRadio() {
         RADIO_WIDTH = calculateRadio(STANDARD_WIDTH, true);
         RADIO_HEIGHT = calculateRadio(STANDARD_HEIGHT, false);
-        RADIO_AVERAGE = (float) Math.sqrt(RADIO_WIDTH * RADIO_WIDTH + RADIO_HEIGHT * RADIO_HEIGHT);
+        RADIO_AVERAGE = (RADIO_WIDTH + RADIO_HEIGHT) / 2;
     }
 
     public static void resetStandard(int widht, int height) {

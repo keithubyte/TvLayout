@@ -27,9 +27,7 @@ public class LayoutResizer {
      * @param params
      */
     public static void resize(View child, ViewGroup.LayoutParams params) {
-        Log.e("LayoutResizer", "resize");
         if (child != null && params != null) {
-            Log.e("LayoutResizer", "wRadio = " + wRadio + ", hRadio = " + hRadio);
             // width and height
             params.width = params.width > 0 ? (int) (params.width * wRadio) : params.width;
             params.height = params.height > 0 ? (int) (params.height * hRadio) : params.height;
