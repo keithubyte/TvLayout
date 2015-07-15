@@ -2,11 +2,14 @@ package com.vsoon.tvlayout;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 /**
  * Created by keith on 15/7/4.
  */
 public class LayoutRadio {
+
+    private static final String TAG = "LayoutRadio";
 
     public static int STANDARD_WIDTH = 1280;
     public static int STANDARD_HEIGHT = 720;
@@ -23,6 +26,7 @@ public class LayoutRadio {
         RADIO_WIDTH = calculateRadio(STANDARD_WIDTH, true);
         RADIO_HEIGHT = calculateRadio(STANDARD_HEIGHT, false);
         RADIO_AVERAGE = (RADIO_WIDTH + RADIO_HEIGHT) / 2;
+        Log.e(TAG, "RADIO_WIDTH = " + RADIO_WIDTH + ", RADIO_HEIGHT = " + RADIO_HEIGHT + ", RADIO_AVERAGE = " + RADIO_AVERAGE);
     }
 
     public static void resetStandard(int widht, int height) {
