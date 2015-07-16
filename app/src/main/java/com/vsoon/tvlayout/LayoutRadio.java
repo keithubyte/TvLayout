@@ -1,8 +1,9 @@
 package com.vsoon.tvlayout;
 
-import android.content.res.Resources;
-import android.util.DisplayMetrics;
+import android.app.Activity;
+import android.graphics.Point;
 import android.util.Log;
+import android.view.Display;
 
 /**
  * Created by keith on 15/7/4.
@@ -11,34 +12,27 @@ public class LayoutRadio {
 
     private static final String TAG = "LayoutRadio";
 
-    public static int STANDARD_WIDTH = 1280;
-    public static int STANDARD_HEIGHT = 720;
+    public static float STANDARD_WIDTH = 1280.0f;
+    public static float STANDARD_HEIGHT = 720.0f;
 
-    public static float RADIO_WIDTH;
-    public static float RADIO_HEIGHT;
-    public static float RADIO_AVERAGE;
+    public static float RADIO_WIDTH = 1.0f;
+    public static float RADIO_HEIGHT = 1.0f;
+    public static float RADIO_AVERAGE = 1.0f;
 
-    static {
-        initRadio();
-    }
-
-    private static void initRadio() {
-        RADIO_WIDTH = calculateRadio(STANDARD_WIDTH, true);
-        RADIO_HEIGHT = calculateRadio(STANDARD_HEIGHT, false);
+    public static void initRadio(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point point = new Point();
+        display.getRealSize(point);
+        RADIO_WIDTH = point.x / STANDARD_WIDTH;
+        RADIO_HEIGHT = point.y / STANDARD_HEIGHT;
         RADIO_AVERAGE = (RADIO_WIDTH + RADIO_HEIGHT) / 2;
         Log.e(TAG, "RADIO_WIDTH = " + RADIO_WIDTH + ", RADIO_HEIGHT = " + RADIO_HEIGHT + ", RADIO_AVERAGE = " + RADIO_AVERAGE);
     }
 
-    public static void resetStandard(int widht, int height) {
-        if (widht > 0 && height > 0) {
-            STANDARD_WIDTH = widht;
-            STANDARD_HEIGHT = height;
-            initRadio();
-        }
+    public static void initRadio(float wRadio, float hRadio, float aRadio) {
+        RADIO_WIDTH = wRadio;
+        RADIO_HEIGHT = hRadio;
+        RADIO_AVERAGE = aRadio;
     }
 
-    private static float calculateRadio(int value, boolean isWidth) {
-        DisplayMetrics dm = Resources.getSystem().getDisplayMetrics();
-        return isWidth ? dm.widthPixels / (float) value : dm.heightPixels / (float) value;
-    }
 }
