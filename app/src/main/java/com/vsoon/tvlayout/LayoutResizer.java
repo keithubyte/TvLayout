@@ -1,7 +1,6 @@
 package com.vsoon.tvlayout;
 
 import android.content.res.Resources;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +18,12 @@ public class LayoutResizer {
 
     private static final float sRadio = Resources.getSystem().getDisplayMetrics().scaledDensity;
 
-    private LayoutResizer(){};
+    private LayoutResizer() {
+    }
 
     /**
      * Resize the size-relative attributions
+     *
      * @param child
      * @param params
      */

@@ -16,12 +16,12 @@
 ```java
 /**
  * Resize the size-relative attributions
+ *
  * @param child
  * @param params
  */
 public static void resize(View child, ViewGroup.LayoutParams params) {
     if (child != null && params != null) {
-
         // width and height
         params.width = params.width > 0 ? (int) (params.width * wRadio) : params.width;
         params.height = params.height > 0 ? (int) (params.height * hRadio) : params.height;
@@ -33,10 +33,11 @@ public static void resize(View child, ViewGroup.LayoutParams params) {
             p.topMargin = (int) (p.topMargin * hRadio);
             p.rightMargin = (int) (p.rightMargin * wRadio);
             p.bottomMargin = (int) (p.bottomMargin * hRadio);
-            p.setMarginStart((int) (p.getMarginStart() * hRadio));
-            p.setMarginEnd((int) (p.getMarginEnd() * hRadio));
+            p.setMarginStart((int) (p.getMarginStart() * aRadio));
+            p.setMarginEnd((int) (p.getMarginEnd() * aRadio));
         }
-        
+
+        // x & y
         if (params instanceof AbsoluteLayout.LayoutParams) {
             AbsoluteLayout.LayoutParams p = (AbsoluteLayout.LayoutParams) params;
             p.x = (int) (p.x * wRadio);
@@ -53,8 +54,8 @@ public static void resize(View child, ViewGroup.LayoutParams params) {
         // font size and others
         if (child instanceof TextView) {
             TextView tv = (TextView) child;
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, tv.getTextSize() * hRadio);
-            tv.setCompoundDrawablePadding((int) (tv.getCompoundDrawablePadding() * hRadio));
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, tv.getTextSize() * aRadio / sRadio);
+            tv.setCompoundDrawablePadding((int) (tv.getCompoundDrawablePadding() * aRadio));
             tv.setMaxWidth((int) (tv.getMaxWidth() * wRadio));
             tv.setMaxHeight((int) (tv.getMaxHeight() * hRadio));
             tv.setMinWidth((int) (tv.getMinWidth() * wRadio));
@@ -69,31 +70,42 @@ public static void resize(View child, ViewGroup.LayoutParams params) {
 ```java
 public class LayoutRadio {
 
+    private static final String TAG = "LayoutRadio";
+
     public static int STANDARD_WIDTH = 1280;
     public static int STANDARD_HEIGHT = 720;
 
-    public static float RADIO_WIDTH;
-    public static float RADIO_HEIGHT;
+    public static int REAL_WIDTH = 0;
+    public static int REAL_HEIGHT = 0;
 
-    static {
-        RADIO_WIDTH = calculateRadio(STANDARD_WIDTH, true);
-        RADIO_HEIGHT = calculateRadio(STANDARD_HEIGHT, false);
+    public static float RADIO_WIDTH = 1.0f;
+    public static float RADIO_HEIGHT = 1.0f;
+    public static float RADIO_AVERAGE = 1.0f;
+
+    public static void initRadio(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point point = new Point();
+        display.getRealSize(point);
+        REAL_WIDTH = point.x;
+        REAL_HEIGHT = point.y;
+        RADIO_WIDTH = REAL_WIDTH / (float) STANDARD_WIDTH;
+        RADIO_HEIGHT = REAL_HEIGHT / (float) STANDARD_HEIGHT;
+        RADIO_AVERAGE = (RADIO_WIDTH + RADIO_HEIGHT) / 2;
+        Log.e(TAG, "REAL_WIDTH = " + REAL_WIDTH
+                + ", REAL_HEIGHT = " + REAL_HEIGHT
+                + ", RADIO_WIDTH = " + RADIO_WIDTH
+                + ", RADIO_HEIGHT = " + RADIO_HEIGHT
+                + ", RADIO_AVERAGE = " + RADIO_AVERAGE);
     }
 
-    public static void resetStandard(int widht, int height) {
-        if (widht > 0 && height > 0) {
-            STANDARD_WIDTH = widht;
-            STANDARD_HEIGHT = height;
-            RADIO_WIDTH = calculateRadio(STANDARD_WIDTH, true);
-            RADIO_HEIGHT = calculateRadio(STANDARD_HEIGHT, false);
-        }
+    public static void initRadio(float wRadio, float hRadio, float aRadio) {
+        RADIO_WIDTH = wRadio;
+        RADIO_HEIGHT = hRadio;
+        RADIO_AVERAGE = aRadio;
     }
 
-    private static float calculateRadio(int value, boolean isWidth) {
-        DisplayMetrics dm = Resources.getSystem().getDisplayMetrics();
-        return isWidth ? dm.widthPixels / (float) value : dm.heightPixels / (float) value;
-    }
 }
+
 ```
 
 最后，为了实现在执行 `addView()`方法前执行调节尺寸的代码，需要自定义父视图。以下以继承 `RelativeLayout` 为例子：
