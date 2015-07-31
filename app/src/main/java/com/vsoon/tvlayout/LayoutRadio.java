@@ -38,10 +38,20 @@ public class LayoutRadio {
                 + ", RADIO_AVERAGE = " + RADIO_AVERAGE);
     }
 
-    public static void initRadio(float wRadio, float hRadio, float aRadio) {
-        RADIO_WIDTH = wRadio;
-        RADIO_HEIGHT = hRadio;
-        RADIO_AVERAGE = aRadio;
+    /**
+     * 设置标准，如果不设置的话，默认的标准宽为 1280，默认的标准高为 720
+     * @param activity
+     * @param standardWidth
+     * @param standardHeight
+     */
+    public static void initStandard(Activity activity, int standardWidth, int standardHeight) {
+        if (standardWidth > 0 && standardHeight > 0) {
+            STANDARD_WIDTH = standardWidth;
+            STANDARD_HEIGHT = standardHeight;
+            initRadio(activity);
+        } else {
+            throw new IllegalArgumentException("Both standard width and height should be positive.");
+        }
     }
 
 }
